@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const Nav = () => {
     return (
         <Container maxWidth="md">
-            <Box display="flex" justifyContent="space-between" alignContent="center" flexWrap="wrap" p={2}>
+            <Box display="flex" justifyContent="space-between" alignContent="center" flexWrap="wrap" p={1}>
                 <Typography variant="h5">Logo</Typography>
                 <Box display="flex" alignItems="center">
                     <Box pr={2}>

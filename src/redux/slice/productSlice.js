@@ -81,12 +81,13 @@ export const productSlice = createSlice({
     initialState:{
         productList:[...productList]
     },
-    // reducers:{
-    //     login: (state,action)=>{
-    //         state.userInfo = action.payload
-    //     }
-    // }
+    reducers:{
+        deleteProduct: (state,action)=>{
+            
+            state.productList = state.productList?.filter(item => item?.id !== action?.payload?.id)
+        }
+    }
 })
 
-// export const {login} = productSlice.actions
+export const {deleteProduct} = productSlice.actions
 export default productSlice.reducer

@@ -1,7 +1,8 @@
 import React from 'react';
-import {Container,Box,Typography,Grid,makeStyles} from '@material-ui/core';
-import {useSelector} from 'react-redux';
+import {Container,Box,Typography,Grid,makeStyles,Tooltip} from '@material-ui/core';
+import {useSelector,useDispatch} from 'react-redux';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {deleteProduct} from '../redux/slice/productSlice'
 
 const useStyle = makeStyles((theme)=>({
     productContainer:{
@@ -29,8 +30,13 @@ const useStyle = makeStyles((theme)=>({
 
 const ShowProduct = () => {
     const classes = useStyle()
+    const dispatch = useDispatch()
     const {productList} = useSelector(state => state.product)
     console.log(productList);
+    
+    const removeProduct = (id)=>{ // delete one product from prodct list
+        dispatch(deleteProduct({id}))
+    }
     return (
         <Container maxWidth="md">
             <Grid container>
@@ -40,7 +46,7 @@ const ShowProduct = () => {
                     </Box>
                 </Grid>
                 <Grid container item xs={12} spacing={2}>
-                    {
+                    {productList.length ?
                     productList?.map((item,index)=>{
                         return(
                             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -54,7 +60,10 @@ const ShowProduct = () => {
                                         </Box>
                                         <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Typography>{item?.price} TK</Typography>
-                                        <DeleteOutlineIcon  className={classes.deleteIcon}/>
+                                        <Tooltip title="Delete product" arrow>
+                                        <DeleteOutlineIcon  className={classes.deleteIcon} onClick={()=> removeProduct(item?.id)} />
+                                        </Tooltip>
+                                        
                                         </Box>
                                     </Box>
                                 </Box>
@@ -62,7 +71,7 @@ const ShowProduct = () => {
                             </Grid>
                         )
                     })
-                   }
+                   :null}
                 </Grid>
 
             </Grid>

@@ -134,6 +134,9 @@ const CreateProduct = () => {
               
             />
           </Grid>
+
+         {/* This code for if want to create new type of product. Referanc for future us */}
+
                     {/* <Grid item xs={12} sm={6}>
                     <Controller
                     render={({ field }) => <TextField 
@@ -150,10 +153,10 @@ const CreateProduct = () => {
                     name="productType"
                     control={control}
                     rules={{ required: "Product product type requierd" }}
-                    
-                    
+
                     />
                     </Grid> */}
+
                     <Grid item xs={12}>
                         <Button type="submit" variant="contained" color="primary"> Create</Button>
                     </Grid>

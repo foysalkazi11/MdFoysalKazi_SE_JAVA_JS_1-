@@ -52,25 +52,25 @@ const productList = [
         name:"Gigabyte GT 710 2GB DDR3 Graphics Card",
         price:5700,
         profitPercentage: 4,
-        productType:"graphics Card"
+        productType:"graphicsCard"
     },
     {   id:10,
         name:"Asus GeForce GT 710 2GB DDR5 Graphics Card",
         price:5800,
         profitPercentage: 3,
-        productType:"graphics Card"
+        productType:"graphicsCard"
     },
     {   id:11,
         name:"Zotac GeForce GT 710 2GB DDR3 Graphics Card",
         price:6200,
         profitPercentage: 4,
-        productType:"graphics Card"
+        productType:"graphicsCard"
     },
     {   id:12,
         name:"MSI GT 710 2GD3H LP 2GB DDR3 Gaming Graphic Card",
         price:6300,
         profitPercentage: 6,
-        productType:"graphics Card"
+        productType:"graphicsCard"
     },
     
 ]
@@ -85,9 +85,13 @@ export const productSlice = createSlice({
         deleteProduct: (state,action)=>{
             
             state.productList = state.productList?.filter(item => item?.id !== action?.payload?.id)
-        }
+        },
+        createProduct: (state,action)=>{
+            state.productList?.push({...action?.payload,id:state.productList?.length + 1})
+        },
+
     }
 })
 
-export const {deleteProduct} = productSlice.actions
+export const {deleteProduct,createProduct} = productSlice.actions
 export default productSlice.reducer

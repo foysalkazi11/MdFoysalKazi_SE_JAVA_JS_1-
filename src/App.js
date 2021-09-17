@@ -6,6 +6,7 @@ import About from '../src/components/About';
 import Login from '../src/components/Login';
 import Dashboard from '../src/components/Dashboard';
 import CreateProduct from '../src/components/CreateProduct';
+import AuthencatedUser from '../src/components/protectedRoute/AuthencatedUser'
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
         <Route exact path="/" component={DisplayProduct} />
         <Route exact path="/about" component={About} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/createProduct" component={CreateProduct} />
+        <AuthencatedUser exact path="/createProduct" component={CreateProduct} />
         <Route exact path="/updateProduct/:id" component={CreateProduct} />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <AuthencatedUser exact path="/dashboard" component={Dashboard} />
       </Switch>
     </Router>
   );

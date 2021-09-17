@@ -23,6 +23,11 @@ const Nav = () => {
                         <Typography>Login</Typography>
                         </Link>
                     </Box>
+                    <Box pr={2}>
+                        <Link to="/createProduct">
+                        <Typography>Create Product</Typography>
+                        </Link>
+                    </Box>
                     <Box>
                         <Link to="/dashboard">
                         <Typography>Dashboard</Typography>

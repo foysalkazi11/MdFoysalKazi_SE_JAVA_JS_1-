@@ -5,7 +5,7 @@ import DisplayProduct from './components/DisplayProduct';
 import About from '../src/components/About';
 import Login from '../src/components/Login';
 import Dashboard from '../src/components/Dashboard';
-import CreateProduct from '../src/components/CreateProduct'
+import CreateProduct from '../src/components/CreateProduct';
 
 function App() {
   return (

@@ -40,6 +40,7 @@ const ShowProduct = () => {
     const classes = useStyle()
     const dispatch = useDispatch()
     const {productList} = useSelector(state => state.product)
+    const {userInfo} = useSelector(state => state.user)
     console.log(productList);
     
     const removeProduct = (id)=>{ // delete one product from prodct list
@@ -78,9 +79,17 @@ const ShowProduct = () => {
                                                 </Tooltip>
                                                 </Link>
                                             </Box>
+                                        {userInfo?.email ?
                                         <Tooltip title="Delete product" arrow>
                                         <DeleteOutlineIcon fontSize="small"  className={classes.deleteIcon} onClick={()=> removeProduct(item?.id)} />
                                         </Tooltip>
+                                        :
+                                        <Link to="/login">
+                                        <Tooltip title="Delete product" arrow>
+                                        <DeleteOutlineIcon fontSize="small"  className={classes.deleteIcon} />
+                                        </Tooltip>
+                                        </Link>
+                                        }
                                         </Box>
                                         
                                         </Box>

@@ -27,6 +27,7 @@ const CreateProduct = () => {
     const history = useHistory()
     const {id} = useParams()
     const {productList} = useSelector(state => state.product)
+    const {userInfo} = useSelector(state => state.user)
    
     const defaultValues ={ // initialize default values
     name : "" ,
@@ -36,17 +37,11 @@ const CreateProduct = () => {
 }
 const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultValues});
     
-     
-    const onSubmit =(data)=>{
-        if (id) {
-            dispatch(updateProduct({...data,id})) // update existing product
-        }else{
-            dispatch(createProduct(data)) //create new product
+    useEffect(() => {
+        if (!userInfo?.email) {
+            history.push("/login")
         }
-        
-        reset(defaultValues) // reset form
-        history.push("/")
-    }
+    }, [])
 
     useEffect(() => {
         
@@ -59,6 +54,17 @@ const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultV
         }
         
     }, [id])
+
+    const onSubmit =(data)=>{
+        if (id) {
+            dispatch(updateProduct({...data,id})) // update existing product
+        }else{
+            dispatch(createProduct(data)) //create new product
+        }
+        
+        reset(defaultValues) // reset form
+        history.push("/")
+    }
     
     
     return (

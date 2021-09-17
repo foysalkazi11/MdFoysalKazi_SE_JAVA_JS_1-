@@ -2,7 +2,9 @@ import React from 'react';
 import {Container,Box,Typography,Grid,makeStyles,Tooltip} from '@material-ui/core';
 import {useSelector,useDispatch} from 'react-redux';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {deleteProduct} from '../redux/slice/productSlice'
+import {deleteProduct} from '../redux/slice/productSlice';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles((theme)=>({
     productContainer:{
@@ -25,6 +27,12 @@ const useStyle = makeStyles((theme)=>({
     },
     deleteIcon:{
         cursor:"pointer"
+    },
+    emptyProductBox:{
+        width:"100%",
+        display:"flex",
+        justifyContent:"center",
+        paddingTop:100
     }
 }))
 
@@ -41,9 +49,11 @@ const ShowProduct = () => {
         <Container maxWidth="md">
             <Grid container>
                 <Grid item xs={12}>
+                    {productList?.length ?
                     <Box pb={2}>
-                        <Typography variant="h6">All product</Typography>
-                    </Box>
+                    <Typography variant="h6">All product</Typography>
+                </Box>
+                    :null}
                 </Grid>
                 <Grid container item xs={12} spacing={2}>
                     {productList.length ?
@@ -60,9 +70,18 @@ const ShowProduct = () => {
                                         </Box>
                                         <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Typography>{item?.price} TK</Typography>
+                                        <Box display="flex" alignItems="center">
+                                            <Box pr={2}>
+                                                <Link to={`/updateProduct/${item?.id}`}>
+                                                <Tooltip title="Edit product" arrow>
+                                                <EditIcon fontSize="small" />
+                                                </Tooltip>
+                                                </Link>
+                                            </Box>
                                         <Tooltip title="Delete product" arrow>
-                                        <DeleteOutlineIcon  className={classes.deleteIcon} onClick={()=> removeProduct(item?.id)} />
+                                        <DeleteOutlineIcon fontSize="small"  className={classes.deleteIcon} onClick={()=> removeProduct(item?.id)} />
                                         </Tooltip>
+                                        </Box>
                                         
                                         </Box>
                                     </Box>
@@ -71,7 +90,9 @@ const ShowProduct = () => {
                             </Grid>
                         )
                     })
-                   :null}
+                   :<Box className={classes.emptyProductBox}>
+                   <Typography >Product list is empty, please add product</Typography>
+               </Box>}
                 </Grid>
 
             </Grid>

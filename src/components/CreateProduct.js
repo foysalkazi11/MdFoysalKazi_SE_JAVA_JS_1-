@@ -1,46 +1,72 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Container,Grid,TextField,Box,Typography, Button,MenuItem} from '@material-ui/core';
 import { useForm, Controller } from "react-hook-form";
-import {useDispatch} from 'react-redux';
-import {createProduct} from '../redux/slice/productSlice'
+import {useDispatch,useSelector} from 'react-redux';
+import {createProduct,updateProduct} from '../redux/slice/productSlice';
+import {useParams,useHistory} from 'react-router-dom';
+
+const options =[
+    {
+        label:"Ram",
+        value:"ram"
+    },
+    {
+        label:"Motherboard",
+        value:"motherboard"
+    },
+    {
+        label:"Graphics card",
+        value:"graphicsCard"
+    },
+]
+
+
 
 const CreateProduct = () => {
     const dispatch = useDispatch()
-    const defaultValues ={
-        name:"",
-        price:"",
-        profitPercentage:"",
-        productType:""
+    const history = useHistory()
+    const {id} = useParams()
+    const {productList} = useSelector(state => state.product)
+   
+    const defaultValues ={ // initialize default values
+    name : "" ,
+    price : "" ,
+    profitPercentage : "" ,
+    productType : "" 
+}
+const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultValues});
+    
+     
+    const onSubmit =(data)=>{
+        if (id) {
+            dispatch(updateProduct({...data,id})) // update existing product
+        }else{
+            dispatch(createProduct(data)) //create new product
+        }
+        
+        reset(defaultValues) // reset form
+        history.push("/")
     }
 
-    const options =[
-        {
-            label:"Ram",
-            value:"ram"
-        },
-        {
-            label:"Motherboard",
-            value:"motherboard"
-        },
-        {
-            label:"Graphics card",
-            value:"graphicsCard"
-        },
-    ]
-    //create new product 
-    const onSubmit =(data)=>{ 
-        dispatch(createProduct(data))
-
-        reset(defaultValues)
-    }
-    const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultValues});
+    useEffect(() => {
+        
+        if (id) { // find product and update default value
+            const findProduct = productList?.find(item =>item?.id === parseInt(id)); 
+            reset({name:findProduct?.name || "",price:findProduct?.price || "",profitPercentage:findProduct?.profitPercentage || "",productType:findProduct?.productType || ""})
+            
+        }else{
+            reset(defaultValues)
+        }
+        
+    }, [id])
+    
     
     return (
         <Container maxWidth="md">
             <Grid container>
                 <Grid item xs={12}>
                     <Box py={2}>
-                    <Typography variant="h6">Create new product</Typography>
+                    <Typography variant="h6">{ id ? "Update product":"Create new product"}</Typography>
                     </Box>
                 </Grid>
                 
@@ -111,8 +137,9 @@ const CreateProduct = () => {
               fullWidth
                 variant="outlined"
                 size="small"
+                disabled={id ? true : false}
                 error={errors.productType ? true : false}
-              helperText={errors.productType ? errors.productType?.message : null}
+                helperText={errors.productType ? errors.productType?.message : null}
                 >
                     <MenuItem value="">
                     <em>None</em>
@@ -158,7 +185,7 @@ const CreateProduct = () => {
                     </Grid> */}
 
                     <Grid item xs={12}>
-                        <Button type="submit" variant="contained" color="primary"> Create</Button>
+                        <Button type="submit" variant="outlined" color="primary"> { id ? "Update":"Create"}</Button>
                     </Grid>
                 </Grid>
                     </form>

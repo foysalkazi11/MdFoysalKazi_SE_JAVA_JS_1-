@@ -24,13 +24,14 @@ const Dashboard = () => {
     const classes = useStyle()
     const {productList} = useSelector(state => state.product);
     const [profitableProduct,setProfitableProduct] = useState([])
-    const calculateProfit =(percent, total) => {
+
+    const calculateProfit =(percent, total) => { // calculate profit function
         return Math.round(((percent/ 100) * total))
     }
     useEffect(() => {
-        const calculateProfitableProduct = productList?.map(item => ({...item,profit: calculateProfit(item?.profitPercentage,item?.price)}))
-        ?.sort((a,b) =>  b?.profit - a?.profit)
-        ?.slice(0,5)
+        const calculateProfitableProduct = productList?.map(item => ({...item,profit: calculateProfit(item?.profitPercentage,item?.price)})) // calcualte profit under a profit property
+        ?.sort((a,b) =>  b?.profit - a?.profit) // sort by profit highest to lowest
+        ?.slice(0,5) // show only top five product
         setProfitableProduct(calculateProfitableProduct);
     }, [productList])
     return (

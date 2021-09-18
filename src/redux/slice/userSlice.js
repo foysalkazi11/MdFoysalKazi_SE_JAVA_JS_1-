@@ -9,11 +9,11 @@ export const userSlice = createSlice({
     reducers:{
         login: (state,action)=>{
             state.userInfo = action.payload
-            localStorage.setItem("user",JSON.stringify(action?.payload))
+            localStorage.setItem("user",JSON.stringify(action?.payload)) // save to laocl storgae.
         },
         logout: (state)=>{
             state.userInfo = {}
-            localStorage.removeItem("user")
+            localStorage.removeItem("user") // remeove from local storage.
         },
     }
 })

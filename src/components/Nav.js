@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container,Box,Typography,makeStyles} from '@material-ui/core';
-import {Link,useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {logout} from '../redux/slice/userSlice';
 import {useDispatch,useSelector} from 'react-redux';
 
@@ -15,9 +15,8 @@ const Nav = () => {
     const classes = useStyle()
     const dispatch = useDispatch()
     const {userInfo}= useSelector(state=>state.user);
-    console.log(userInfo);
 
-    const handleLogout = ()=>{
+    const handleLogout = ()=>{ // logout user menthod
         dispatch(logout())
     }
     return (

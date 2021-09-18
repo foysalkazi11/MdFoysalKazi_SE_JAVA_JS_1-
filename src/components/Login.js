@@ -14,7 +14,8 @@ const Login = () => {
     const dispatch = useDispatch();
     const history = useHistory()
     const { handleSubmit, control, reset,formState: { errors }, } = useForm({defaultValues});
-    const onSubmit = data =>{
+
+    const onSubmit = data =>{ // submit data for login
         dispatch(login(data))
         reset(defaultValues)
         history.push("/")

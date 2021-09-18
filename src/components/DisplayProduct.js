@@ -34,6 +34,12 @@ const useStyle = makeStyles((theme)=>({
         display:"flex",
         justifyContent:"center",
         paddingTop:100
+    },
+    productName:{
+        width:"100%",
+        whiteSpace:"nowrap",
+        overflow:"hidden",
+        textOverflow:"ellipsis"
     }
 }))
 
@@ -83,7 +89,7 @@ const ShowProduct = () => {
                                     </Box>
                                     <Box  display="flex" flexDirection="column">
                                         <Box pb={1}>
-                                        <Typography>{item?.name}</Typography>
+                                        <Typography className={classes.productName}>{item?.name}</Typography>
                                         </Box>
                                         <Box display="flex" alignItems="center" justifyContent="space-between">
                                         <Typography>{item?.price} TK</Typography>

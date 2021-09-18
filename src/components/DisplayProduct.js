@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {Container,Box,Typography,Grid,makeStyles,Tooltip} from '@material-ui/core';
 import {useSelector,useDispatch} from 'react-redux';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {deleteProduct} from '../redux/slice/productSlice';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
 
 const useStyle = makeStyles((theme)=>({
     productContainer:{
@@ -37,12 +38,27 @@ const useStyle = makeStyles((theme)=>({
 }))
 
 const ShowProduct = () => {
-    const classes = useStyle()
-    const dispatch = useDispatch()
-    const {productList} = useSelector(state => state.product)
-    const {userInfo} = useSelector(state => state.user)
-    console.log(productList);
+    const classes = useStyle();
+    const dispatch = useDispatch();
+    const {productList} = useSelector(state => state.product);
+    const {userInfo} = useSelector(state => state.user);
+    const [pagination,setPagination] = useState([])
+    const [activePage, setActivePage] = useState(1);
+
+    const total = Math.ceil(productList.length / 5);
+
+  const handleChangePage = (event, newPage=1) => { // calculate pagination product
+    const newArray =  productList.slice((newPage - 1) * 5, newPage * 5 );
+    setPagination(newArray)
+    setActivePage(newPage);
     
+  };
+
+  useEffect(() => {
+    handleChangePage()
+  }, [productList])
+    
+
     const removeProduct = (id)=>{ // delete one product from prodct list
         dispatch(deleteProduct({id}))
     }
@@ -52,13 +68,13 @@ const ShowProduct = () => {
                 <Grid item xs={12}>
                     {productList?.length ?
                     <Box pb={2}>
-                    <Typography variant="h6">All product</Typography>
+                    <Typography variant="h6">All products</Typography>
                 </Box>
                     :null}
                 </Grid>
                 <Grid container item xs={12} spacing={2}>
-                    {productList.length ?
-                    productList?.map((item,index)=>{
+                    {pagination.length ?
+                    pagination?.map((item,index)=>{
                         return(
                             <Grid item xs={12} sm={6} md={4} key={index}>
                                 <Box display='flex' flexDirection="column" p={1} className={classes.productContainer}>
@@ -105,6 +121,17 @@ const ShowProduct = () => {
                 </Grid>
 
             </Grid>
+
+            {pagination.length ?
+            <Box display="flex" justifyContent="center" pt={3}>
+            <Pagination
+            count={total}
+            onChange={handleChangePage}
+            color="primary"
+            page={activePage}
+             />
+        </Box>
+             :null}
         
         </Container>
     )

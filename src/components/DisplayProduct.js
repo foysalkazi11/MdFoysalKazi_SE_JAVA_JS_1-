@@ -62,6 +62,7 @@ const ShowProduct = () => {
 
   useEffect(() => {
     handleChangePage()
+    //eslint-disable-next-line
   }, [productList])
     
 

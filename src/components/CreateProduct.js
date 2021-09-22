@@ -41,6 +41,7 @@ const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultV
         if (!userInfo?.email) {
             history.push("/login")
         }
+        //eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -52,7 +53,7 @@ const { handleSubmit, control, reset,formState: { errors } } = useForm({defaultV
         }else{
             reset(defaultValues)
         }
-        
+        //eslint-disable-next-line
     }, [id])
 
     const onSubmit =(data)=>{
